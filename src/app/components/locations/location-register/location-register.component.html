@@ -1,0 +1,23 @@
+<div class="col col-sm-12" *ngIf="!location && !responseMessage">
+	<div id="preloaderSerpiente">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+	</div>
+</div>
+<div class="col col-sm-12 col-lg-8 mt-4" style="margin: auto;" [ngClass]="{'successMessage':status=='success', 'errorMessage':status=='error'}" *ngIf="(status=='error' || status=='success') && responseMessage">
+	<span>{{ responseMessage }}</span><br/>
+	<span *ngIf="validationMessage">{{ validationMessage }}</span>
+</div>
+<div class="mb-4" *ngIf="!location"></div>
+<div class="backLink col-sm-12 col-lg-8" *ngIf="location"><a href="javascript:history.back()">Regresar</a></div>
+<div class="formContainer col-sm-12 col-lg-8" *ngIf="location">
+	<h2 class="formTitle mb-4">{{ page_title }}</h2>
+	<app-location-model (sendFlagWithInfo)="onSubmit($event)"
+						[location]="this.location"
+						[preloader2Status]="this.preloader2Status"
+						[buttonText]="this.buttonText">						
+	</app-location-model>
+</div>

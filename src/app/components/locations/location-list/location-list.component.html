@@ -1,0 +1,77 @@
+<div class="col col-sm-12" *ngIf="!locations && !responseMessage">
+	<div id="preloaderSerpiente">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+	</div>
+</div>
+<div class="col col-sm-12 mt-4" [ngClass]="{'successMessage':status=='success', 'errorMessage':status=='error'}" *ngIf="(status=='error' || status=='success') && responseMessage">
+	<span>{{ responseMessage }}</span><br/>
+</div>
+<div class="mb-4" *ngIf="!locations"></div>
+<div class="backLink d-inline-block col-sm-6 p-0" *ngIf="locations">
+	<a class="" href="javascript:history.back()">Regresar</a>
+</div>
+<div class="tableContainer" *ngIf="locations">
+	<h2 class="formTitle">{{ page_title }}</h2>
+	<div class="tableContainerAll col col-sm-12">
+		<div class="paginationControls" *ngIf="locations && locations.length > itemsPerPage">
+			<pagination-controls (pageChange)="pageChange($event)"
+								 previousLabel="Anterior"
+								 nextLabel="Siguiente"
+								 maxSize="4">
+			</pagination-controls>
+		</div>
+		<table class="table table-bordered">
+			<thead class="thead_styles">
+				<tr>
+					<th width="10%">Id</th>
+					<th width="60%">Nombre</th>
+					<th *ngIf="identity.role=='admin'">Acción</th>
+				</tr>
+			</thead>
+			<tbody class="tbody_styles">
+				<tr *ngFor="let location of locations | paginate: {itemsPerPage: itemsPerPage, currentPage: actualPage};" class="tableStyles">
+					<td [routerLink]="['/editar-localidades/', location.id]">{{ location.id }}</td>
+					<td [routerLink]="['/editar-localidades/', location.id]">{{ location.name }}</td>
+					<td style="padding: 0.55rem"><button type="button" class="btn btn-danger" data-toggle="modal" [attr.data-target]="'#myModal'+location.id">Borrar</button></td>
+
+					<!-- the Modal -->
+					<div class="modal animated fadeIn faster" id="{{ 'myModal'+location.id }}">
+						<div class="modal-dialog">
+							<div class="modal-content">
+
+								<!-- Modal Header -->
+						    	<div class="modal-header">
+						    		<h4 class="modal-title">Borrar la Localidad Definitivamente</h4>
+						    		<button type="button" class="close" data-dismiss="modal">&times;</button>
+						    	</div>
+
+								<!-- Modal body -->
+								<div class="modal-body">
+									Seguro que quieres eliminar la localidad: <b>{{ location.name }}</b>?
+								</div>
+
+								<!-- Modal footer -->
+								<div class="modal-footer">
+									<a (click)="deleteLocation(location.id)" class="btn_delete" data-dismiss="modal">Borrar</a>
+									<button type="button" class="btn_close" data-dismiss="modal">Close</button>
+								</div>
+
+							</div>
+						</div>
+					</div>				
+				</tr>					
+			</tbody>
+		</table>		
+		<div class="paginationControls" *ngIf="locations && locations.length > itemsPerPage">
+			<pagination-controls (pageChange)="pageChange($event)"
+								 previousLabel="Anterior"
+								 nextLabel="Siguiente"
+								 maxSize="4">
+			</pagination-controls>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,63 @@
+<div class="col col-sm-12" *ngIf="!suggestions && !responseMessage">
+	<div id="preloaderSerpiente">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+	</div>
+</div>
+<div class="col col-sm-12 mt-4" [ngClass]="{'successMessage':status=='success', 'errorMessage':status=='error'}" *ngIf="(status=='error' || status=='success') && responseMessage">
+	<span>{{ responseMessage }}</span><br/>
+</div>
+<div class="mb-4" *ngIf="!suggestions"></div>
+<div class="backLink d-inline-block col-sm-6 p-0" *ngIf="suggestions">
+	<a class="" href="javascript:history.back()">Regresar</a>
+</div>
+<div class="exportLink d-inline-block col-sm-6 p-0" *ngIf="suggestions">
+	<span class="btn btn-info d-inline-block" (click)="newReport()">Generar Informe</span>
+	<div id="loader" class="d-inline-block ml-2" *ngIf="loader"></div>
+</div>
+<div class="tableContainer" *ngIf="suggestions">
+	<h2 class="formTitle">{{ page_title }}</h2>
+	<div class="tableContainerAll col col-sm-12">
+		<div class="paginationControls" *ngIf="suggestions && suggestions.length > itemsPerPage">
+			<pagination-controls (pageChange)="pageChange($event)"
+								 previousLabel="Anterior"
+								 nextLabel="Siguiente"
+								 maxSize="4">
+			</pagination-controls>
+		</div>
+		<table class="table table-bordered">
+			<thead class="thead_styles">
+				<tr>
+					<th width="12%">Nombres</th>
+					<th width="12%">Apellidos</th>
+					<th width="12%">Número de documento</th>
+					<th width="12%">Correo electrónico</th>
+					<th width="12%">Localidad</th>
+					<th>Sugerencia</th>
+					<!-- <th *ngIf="identity.role=='ROLE_SUPER_ADMIN'">Eliminar</th> -->
+				</tr>
+			</thead>
+			<tbody class="tbody_styles">
+				<tr *ngFor="let suggestion of suggestions | paginate: {itemsPerPage: itemsPerPage, currentPage: actualPage};" [routerLink]="['/ver-sugerencia/', suggestion.id]" class="tableStyles">
+					<td>{{ suggestion.name }}</td>
+					<td>{{ suggestion.surname }}</td>
+					<td>{{ suggestion.documentId }}</td>
+					<td>{{ suggestion.email }}</td>
+					<td>{{ suggestion.location.name }}</td>
+					<td>{{ suggestion.suggestion }}</td>
+					<!-- <td *ngIf="identity.role=='ROLE_SUPER_ADMIN'" style="padding: 0.55rem"><button type="button" class="btn btn-danger" data-toggle="modal" [attr.data-target]="'#myModal'+suggestion.id">Borrar</button></td>				 -->
+				</tr>
+			</tbody>
+		</table>		
+		<div class="paginationControls" *ngIf="suggestions && suggestions.length > itemsPerPage">
+			<pagination-controls (pageChange)="pageChange($event)"
+								 previousLabel="Anterior"
+								 nextLabel="Siguiente"
+								 maxSize="4">
+			</pagination-controls>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,30 @@
+.errorContainer{
+	margin: auto;
+	padding: 1rem;
+	text-align: center;
+}
+.errorContainer img{
+	width: 100%;
+}
+.errorContainer area{
+	cursor: pointer;
+	background-clip: content-box, border-box;
+}
+.freepikLink{
+	padding: 1rem;
+	position: absolute;
+	background: transparent;
+	bottom: 1.5rem;
+	right: 40%;
+}
+@media (max-width: 1200px){
+	.freepikLink{
+		right: 35%;
+		bottom: 1.7rem;
+	}
+}
+@media (max-width: 576px){
+	.freepikLink{
+		width: 30%;
+	}
+}

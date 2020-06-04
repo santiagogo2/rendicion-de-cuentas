@@ -1,0 +1,95 @@
+<form #suggestionsForm="ngForm" class="form-container" (ngSubmit)="onSubmit(suggestionsForm)">
+	<div class="form-group">
+		<div class="col-sm-12 col-md-12 col-lg-6 d-inline-block">
+			<label for="name" class="labelForm">Nombres*</label>
+			<input type="text" name="name" id="name" class="form-control inputForm" [ngClass]="{'is-invalid': name.invalid && name.touched}" #name="ngModel" [(ngModel)]="suggestions.name" required pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" placeholder="Ingrese sus apellidos">
+		</div>
+		<div class="col-sm-12 col-md-12 col-lg-6 d-inline-block">
+			<label for="surname" class="labelForm">Apellidos*</label>
+			<input type="text" name="surname" id="surname" class="form-control inputForm" [ngClass]="{'is-invalid': surname.invalid && surname.touched}" #surname="ngModel" [(ngModel)]="suggestions.surname" required pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" placeholder="Ingrese sus apellidos">
+		</div>
+		<small class="invalid-feedback d-block col col-sm-12" *ngIf="name.invalid && name.touched">Debe ingresar sus nombres. Solo se admiten letras en el campo</small>
+		<small class="invalid-feedback d-block col col-sm-12" *ngIf="surname.invalid && surname.touched">Debe ingresar sus apellidos. Solo se admiten letras en el campo</small>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-12 col-md-12 col-lg-6 d-inline-block">
+			<label for="documentId" class="labelForm">Documento de Identidad*</label>
+			<input type="text" name="documentId" id="documentId" class="form-control inputForm" [ngClass]="{'is-invalid': documentId.invalid && documentId.touched}" #documentId="ngModel" [(ngModel)]="suggestions.documentId" required pattern="[0-9]+" maxlength="12" placeholder="Ingrese su número de documento">
+		</div>
+		<div class="col-sm-12 col-md-12 col-lg-6 d-inline-block">
+			<label for="sex" class="labelForm">Sexo*</label>
+			<select style="background-position-x: 96%" name="sex" id="sex" class="form-control inputForm" [ngClass]="{'is-invalid': sex.invalid && sex.touched}" #sex="ngModel" [(ngModel)]="suggestions.sexo" required>
+				<option *ngFor="let sxo of sexo" value="{{ sxo.value }}">{{ sxo.value }}</option>
+			</select>
+		</div>
+		<small class="invalid-feedback d-block col col-sm-12" *ngIf="documentId.invalid && documentId.touched">Debe ingresar un número de documento válido. Solo se admiten números</small>
+		<small class="invalid-feedback d-block col col-sm-12" *ngIf="sex.invalid && sex.touched">Debe seleccionar un elemento de la lista desplegable</small>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-12 col-md-12 col-lg-6 d-inline-block">
+			<label for="phone" class="labelForm">Teléfono*</label>
+			<input type="text" name="phone" id="phone" class="form-control inputForm" [ngClass]="{'is-invalid': phone.invalid && phone.touched}" #phone="ngModel" [(ngModel)]="suggestions.phone" pattern="[0-9]+" placeholder="Ingrese su número de teléfono" minlength="7" maxlength="10" required>
+		</div>
+		<div class="col-sm-12 col-md-12 col-lg-6 d-inline-block">
+			<label for="address" class="labelForm">Dirección de correspondencia*</label>
+			<input type="text" name="address" id="address" class="form-control inputForm" [ngClass]="{'is-invalid': address.invalid && address.touched}" #address="ngModel" [(ngModel)]="suggestions.address" required placeholder="Ingrese su dirección de correspondencia">
+		</div>
+		<small class="invalid-feedback d-block col col-sm-12" *ngIf="phone.invalid && phone.touched">El teléfono ingresado es inválido. Debe ingresar entre 7-10 números</small>
+		<small class="invalid-feedback d-block col col-sm-12" *ngIf="address.invalid && address.touched">Debe ingresar su dirección de residencia</small>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-12 col-md-12 col-lg-6 d-inline-block">
+			<label for="locationId" class="labelForm">Localidad*</label>
+			<select style="background-position-x: 96%" name="locationId" id="locationId" class="form-control inputForm" [ngClass]="{'is-invalid': locationId.invalid && locationId.touched}" #locationId="ngModel" [(ngModel)]="suggestions.location_id" required>
+				<option *ngFor="let location of locations" value="{{ location.id }}">{{ location.name }}</option>
+			</select>
+		</div>
+		<div class="col-sm-12 col-md-12 col-lg-6 d-inline-block">
+			<label for="neighborhood" class="labelForm">Barrio*</label>
+			<input type="text" name="neighborhood" id="neighborhood" class="form-control inputForm" [ngClass]="{'is-invalid': neighborhood.invalid && neighborhood.touched}" #neighborhood="ngModel" [(ngModel)]="suggestions.neighborhood" required pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" placeholder="Ingrese su barrio">
+		</div>
+		<small class="invalid-feedback d-block col col-sm-12" *ngIf="locationId.invalid && locationId.touched">Debe seleccionar su localidad de la lista desplegable</small>
+		<small class="invalid-feedback d-block col col-sm-12" *ngIf="neighborhood.invalid && neighborhood.touched">Debe ingresar el barrio donde habita</small>
+	</div>
+	<div class="form-group col col-sm-12">
+		<label for="email" class="labelForm">Correo electrónico de contacto*</label>
+		<input type="email" name="email" id="email" class="form-control inputForm" [ngClass]="{'is-invalid': email.invalid && email.touched}" #email="ngModel" [(ngModel)]="suggestions.email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Ingrese un correo electrónico de contacto">		
+		<small class="invalid-feedback d-block" *ngIf="email.invalid && email.touched">Debe ingresar un correo electrónico de contacto</small>
+	</div>
+	<div class="form-group col col-sm-12">
+		<label for="suggestion" class="labelForm">Descripción de la solicitud*</label>
+		<textarea name="suggestion" id="suggestion" rows="5" class="form-control inputForm" [ngClass]="{'is-invalid': suggestion.invalid && suggestion.touched}" #suggestion="ngModel" [(ngModel)]="suggestions.suggestion" required minlength="30" placeholder="Ingrese su inquietud. Esta debe tener un tamaño mínimo de 30 caracteres. Las preguntas serán respondidas en los tiempos establecidos para un derecho de petición."></textarea>
+		<small class="invalid-feedback d-block" *ngIf="suggestion.invalid && suggestion.touched">Debe ingresar su solicitud (Mínimo 30 caracteres)</small>
+	</div>
+	<div class="form-group col col-sm-12">
+		<label for="condition" class="labelForm">Se encuentra en alguna de estas condiciones:*</label>
+		<select style="background-position-x: 96%" name="condition" id="condition" class="form-control inputForm" [ngClass]="{'is-invalid': condition.invalid && condition.touched}" #condition="ngModel" [(ngModel)]="suggestions.conditions" required>
+			<option *ngFor="let condi of conditions" value="{{ condi.value }}">{{ condi.value }}</option>
+		</select>
+		<small class="invalid-feedback d-block" *ngIf="medium.invalid && medium.touched">Debe seleccionar una condición de la lista desplegable</small>
+	</div>
+	<div class="form-group col col-sm-12">
+		<label for="medium" class="labelForm">Desea que la respuesta sea dada a través de que medio:*</label>
+		<select style="background-position-x: 96%" name="medium" id="medium" class="form-control inputForm" [ngClass]="{'is-invalid': medium.invalid && medium.touched}" #medium="ngModel" [(ngModel)]="suggestions.medium" required>
+			<option *ngFor="let reception of receptions" value="{{ reception.value }}">{{ reception.value }}</option>
+		</select>
+		<small class="invalid-feedback d-block" *ngIf="medium.invalid && medium.touched">Debe seleccionar un médio de recepción de la lista desplegable</small>
+	</div>
+	<div class="captchaContainer col col-sm-12" *ngIf="needCaptcha">
+		<div class="captcha">
+			<re-captcha 
+				(resolved)="resolved($event)"
+				siteKey="6LdSt9gUAAAAAHEr7yFQT534YL56WUq02aUmIYQQ"></re-captcha>
+		</div>
+		<div class="col col-sm-12 infoCaptcha">
+			<small>Debe completar el Captcha para envíar su respuesta</small>
+		</div>
+	</div>
+	<div class="buttonSubmit col-sm-12" *ngIf="needButtonSubmit">
+		<input type="submit" value="Enviar inquietud" class="btn btn-success btnPrefer col-sm-12 col-md-8 col-lg-6" [disabled]="suggestionsForm.invalid || !captchaFlag">
+	</div>
+	<div id="preloaderDisco" *ngIf="preloader2Status needButtonSubmit"></div>
+	<div class="col col-sm-12 info" *ngIf="needButtonSubmit">
+		<small>Los campos marcados con * son obligatorios</small>
+	</div>
+</form>
