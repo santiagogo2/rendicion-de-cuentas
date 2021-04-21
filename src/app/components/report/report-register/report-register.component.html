@@ -1,0 +1,150 @@
+<div class="col col-sm-12" *ngIf="!report && !responseMessage">
+	<div id="preloaderSerpiente">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+	</div>
+</div>
+<div class="col col-sm-12 mt-4" [ngClass]="{'successMessage':status=='success', 'errorMessage':status=='error'}" *ngIf="(status=='error' || status=='success') && responseMessage">
+	<span>{{ responseMessage }}</span><br/>
+</div>
+<div class="mb-4" *ngIf="!report"></div>
+<div class="backLink" *ngIf="report"><a href="javascript:history.back()">Regresar</a></div>
+<div class="formContainer" *ngIf="report">
+	<form #reportForm="ngForm" class="form-container" (ngSubmit)="onSubmit(reportForm)">
+		<div class="form-group">
+			<div class="col col-sm-12 d-inline-block align-top">
+				<label for="serviceAddress" class="labelForm">Dirección de Servicios a la cual se relacional el suceso de seguridad*</label>
+				<select style="background-position-x: 96%" name="serviceAddress" class="form-control inputForm" [ngClass]="{'is-invalid': serviceAddress.invalid && serviceAddress.touched}" #serviceAddress="ngModel" [(ngModel)]="report.services_address_id" required>
+					<option *ngFor="let saddress of servicesAddress" value="{{ saddress.id }}">{{ saddress.name }}</option>
+				</select>
+				<small class="invalid-feedback d-block" *ngIf="serviceAddress.touched && serviceAddress.invalid">Debe seleccionar una dirección de servicios</small>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col col-sm-12 col-md-6 d-inline-block align-top">
+				<label for="name" class="labelForm">Nombres y Apellidos del Paciente</label>
+				<input type="text" name="name" class="form-control inputForm" [ngClass]="{ 'is-invalid': name.invalid && name.touched }" #name="ngModel" [(ngModel)]="report.name" pattern="[a-zA-ZÀ-ÿ ]+">
+				<small class="invalid-feedback d-block" *ngIf="name.touched && name.invalid">Ingrese un nombre válido. Solo se admiten números</small>
+			</div>
+			<div class="col col-sm-12 col-md-6 d-inline-block align-top">
+				<label for="patientId" class="labelForm">Número de identificación del paciente</label>
+				<input type="text" name="patientId" class="form-control inputForm" [ngClass]="{ 'is-invalid': patientId.invalid && patientId.touched }" #patientId="ngModel" [(ngModel)]="report.document" pattern="[0-9]+" maxlength="10">
+				<small class="invalid-feedback d-block" *ngIf="patientId.touched && patientId.invalid">Ingrese un número de identificación válido. Solo se admiten números</small>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col col-sm-12 col-md-4 d-inline-block align-top">
+				<label for="age" class="labelForm">Ingrese la edad del paciente</label>
+				<input type="text" name="age" class="form-control inputForm" [ngClass]="{ 'is-invalid': age.invalid && age.touched }" #age="ngModel" [(ngModel)]="report.age" pattern="[0-9]+" maxlength="3">
+				<small class="invalid-feedback d-block" *ngIf="age.touched && age.invalid">Ingrese una edad correcta. Solo se admiten números</small>
+			</div>
+			<div class="col col-sm-12 col-md-4 d-inline-block align-top">
+				<label for="gender" class="labelForm">Genero</label>
+				<select style="background-position-x: 96%" name="gender" class="form-control inputForm" [ngClass]="{'is-invalid': gender.invalid && gender.touched}" #gender="ngModel" [(ngModel)]="report.gender">
+					<option *ngFor="let gender of genders" value="{{ gender.id }}">{{ gender.name }}</option>
+				</select>
+			</div>
+			<div class="col col-sm-12 col-md-4 d-inline-block align-top">
+				<label for="insurer" class="labelForm">Aseguradora</label>
+				<select style="background-position-x: 96%" name="insurer" class="form-control inputForm" [ngClass]="{'is-invalid': insurer.invalid && insurer.touched}" #insurer="ngModel" [(ngModel)]="report.insurer_id">
+					<option *ngFor="let insurer of insurers" value="{{ insurer.id }}">{{ insurer.name }}</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col col-sm-12 d-inline-block align-top">
+				<label for="reportDate" class="labelForm">Fecha en la que se realiza el reporte*</label>
+				<input id="reportDate" type="date" name="reportDate" class="form-control inputForm" [ngClass]="{'is-invalid': reportDate.invalid && reportDate.touched}" #reportDate="ngModel" [(ngModel)]="report.report_date" max="" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" required>
+				<small class="invalid-feedback d-block" *ngIf="reportDate.touched && reportDate.invalid">Debe ingresar la fecha en la que se realiza el reporte</small>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col col-sm-12 col-md-6 d-inline-block align-top">
+				<label for="eventsDate" class="labelForm">Fecha en que se presenta el suceso de seguridad*</label>
+				<input id="eventsDate" type="date" name="eventsDate" class="form-control inputForm" [ngClass]="{'is-invalid': eventsDate.invalid && eventsDate.touched}" #eventsDate="ngModel" [(ngModel)]="report.events_date" max="" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" required>
+				<small class="invalid-feedback d-block" *ngIf="eventsDate.touched && eventsDate.invalid">Debe ingresar la fecha en la que se presento el suceso de seguridad</small>
+			</div>
+			<div class="col col-sm-12 col-md-6 d-inline-block align-top">
+				<label for="eventsTime" class="labelForm">Hora en que se presenta el suceso de seguridad*</label>
+				<input id="eventsTime" type="time" name="eventsTime" class="form-control inputForm" [ngClass]="{'is-invalid': eventsTime.invalid && eventsTime.touched}" #eventsTime="ngModel" [(ngModel)]="report.events_time" max="" required>
+				<small class="invalid-feedback d-block" *ngIf="eventsTime.touched && eventsTime.invalid">Debe ingresar la hora en la que se presentó el suceso de seguridad</small>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col col-sm-12 d-inline-block align-top">
+				<label for="profile" class="labelForm">Perfil de quien realiza el reporte*</label>
+				<select style="background-position-x: 96%" name="profile" class="form-control inputForm" [ngClass]="{'is-invalid': profile.invalid && profile.touched}" #profile="ngModel" [(ngModel)]="report.profile_id" required>
+					<option *ngFor="let profile of profiles" value="{{ profile.id }}">{{ profile.name }}</option>
+				</select>
+				<small class="invalid-feedback d-block" *ngIf="profile.touched && profile.invalid">Debe seleccionar un perfil</small>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col col-sm-12 col-md-6 d-inline-block align-top">
+				<label for="unit" class="labelForm">Unidad en la que se presenta el suceso de seguridad*</label>
+				<select style="background-position-x: 96%" name="unit" class="form-control inputForm" [ngClass]="{'is-invalid': unit.invalid && unit.touched}" #unit="ngModel" [(ngModel)]="report.unit_id" required>
+					<option *ngFor="let unit of units" value="{{ unit.id }}">{{ unit.name }}</option>
+				</select>
+				<small class="invalid-feedback d-block" *ngIf="unit.touched && unit.invalid">Debe seleccionar una Unidad</small>
+			</div>
+			<div class="col col-sm-12 col-md-6 d-inline-block align-top">
+				<label for="service" class="labelForm">Servicio en el que se presenta el suceso de seguridad*</label>
+				<select style="background-position-x: 96%" name="service" class="form-control inputForm" [ngClass]="{'is-invalid': service.invalid && service.touched}" #service="ngModel" [(ngModel)]="report.service_id" required>
+					<option *ngFor="let service of services" value="{{ service.id }}">{{ service.name }}</option>
+				</select>
+				<small class="invalid-feedback d-block" *ngIf="service.touched && service.invalid">Debe seleccionar un Servicio</small>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col col-sm-12 d-inline-block align-top">
+				<label for="description" class="labelForm">Descripción del suceso</label>
+				<textarea name="description" rows="5" class="form-control inputForm" [ngClass]="{'is-invalid': description.invalid && description.touched}" #description="ngModel" [(ngModel)]="report.event_description" minlength="30" placeholder="Por favor describa con sus palabras lo que sucedió diligenciando los signos vitales (Tensión arterial, temperatura, frecuencia respiratoria, frecuencia cardíaca y glucometría)"></textarea>
+				<small class="invalid-feedback d-block" *ngIf="description.touched && description.invalid">La descripción debe tener un mínimo de 30 caracteres</small>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col col-sm-12 d-inline-block align-top">
+				<label for="situation" class="labelForm">Situación</label>
+				<textarea name="situation" rows="5" class="form-control inputForm" [ngClass]="{'is-invalid': situation.invalid && situation.touched}" #situation="ngModel" [(ngModel)]="report.situation_description" minlength="30" placeholder="Por favor describa la situación, antecedentes, evaluación y recomendacones del paciente, referentes a su cuadro clínico, luego del suceso de seguridad"></textarea>
+				<small class="invalid-feedback d-block" *ngIf="situation.touched && situation.invalid">La situación debe tener un mínimo de 30 caracteres</small>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col col-sm-12 d-inline-block align-top">
+				<label for="situation" class="labelForm">Descripción médica</label>
+				<textarea name="medical" rows="5" class="form-control inputForm" [ngClass]="{'is-invalid': medical.invalid && medical.touched}" #medical="ngModel" [(ngModel)]="report.medical_description" minlength="30" placeholder="Si el suceso se relaciona con un Medicamento o Dispositivo Médico, describa la marca, referencia o modelo, lote o serial"></textarea>
+				<small class="invalid-feedback d-block" *ngIf="medical.touched && medical.invalid">La descripción médica debe tener un mínimo de 30 caracteres</small>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col col-sm-12 d-inline-block align-top">
+				<label for="email" class="labelForm">Para poder realizar la retroalimentación del análisis del suceso déjenos su correo electrónico</label>
+				<input id="email" type="email" name="email" class="form-control inputForm" [ngClass]="{'is-invalid': email.invalid && email.touched}" #email="ngModel" [(ngModel)]="report.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+				<small class="invalid-feedback d-block" *ngIf="email.touched && email.invalid">Debe ingresar un correo válido</small>
+			</div>
+		</div>
+		<!-- <div class="captchaContainer col col-sm-12" *ngIf="needCaptcha">
+			<div class="captcha">
+				<re-captcha 
+					(resolved)="resolved($event)"
+					siteKey="6LdSt9gUAAAAAHEr7yFQT534YL56WUq02aUmIYQQ"></re-captcha>
+			</div>
+			<div class="col col-sm-12 infoCaptcha">
+				<small>Debe completar el Captcha para envíar su respuesta</small>
+			</div>
+		</div> -->
+		<div class="buttonSubmit col-sm-12">
+			<input type="submit" value="Registrar Suceso" class="btn btn-success btnPrefer col-sm-12" [disabled]="reportForm.invalid || !captchaFlag">
+		</div>
+		<div id="preloaderDisco" *ngIf="preloaderStatus"></div>
+		<div class="col col-sm-12 info">
+			<small>Los campos marcados con * son obligatorios</small>
+		</div>
+		<div class="col col-sm-12 mt-4" [ngClass]="{'successMessage':status=='success', 'errorMessage':status=='error'}" *ngIf="(status=='error' || status=='success') && responseMessage">
+			<span>{{ responseMessage }}</span><br/>
+		</div>
+	</form>
+</div>

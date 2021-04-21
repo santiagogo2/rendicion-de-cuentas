@@ -1,31 +1,48 @@
 export var global = {
 	// url: 'http://www.backend-rendicion-de-cuentas.subredsur.gov.co/public/api/',
-	url: 'http://localhost:8080/rendicion-de-cuentas/api-rest-rendicion-de-cuentas/public/api/',
+	url: 'http://localhost:8080/seguridadPaciente/api-seguridad-paciente/public/api/',
 	roles: [
-		{id: 1, value: 'admin', name: 'Administrador'},
-		{id:2, value: 'user', name: 'Usuario'}
+		{id: 1, value: 'ROLE_ADMIN', name: 'Administrador'},
+		{id:2, value: 'ROLE_USER', name: 'Usuario'}
 	],
-	sexo: [
-		{id: 1, value: 'Hombre'},
-		{id: 2, value: 'Mujer'},
-		{id: 3, value: 'Intersexual'}
+
+	servicesAddress: [
+		{id: 1, name: 'DIRECCIÓN DE GESTIÓN DEL RIESGO'},
+		{id: 2, name: 'DIRECCIÓN DE URGENCIAS'},
+		{id: 3, name: 'DIRECCIÓN DE AMBULATORIOS'},
+		{id: 4, name: 'DIRECCIÓN DE HOSPITALARIOS'},
+		{id: 5, name: 'DIRECCIÓN DE COMPLEMENTARIOS'},
 	],
-	conditions: [
-		{id: 1, value: 'Adulto Mayor'},
-		{id: 2, value: 'Habitante de la calle'},
-		{id: 3, value: 'Gestante'},
-		{id: 4, value: 'Ninguna'},
-		{id: 5, value: 'Otra'},
-		{id: 6, value: 'Peligro inminente'},
-		{id: 7, value: 'Periodista en ejercicio de sus actividades'},
-		{id: 8, value: 'Persona con discapacidad'},
-		{id: 9, value: 'Primera infancia'},
-		{id: 10, value: 'Veterano fuerza pública'},
-		{id: 11, value: 'Víctima del conflicto armado'}
+	genders: [
+		{id: 1, name: 'MASCULINO'},
+		{id: 2, name: 'FEMENINO'},
+		{id: 3, name: 'OTRO'},
+		{id: 4, name: 'NO APLICA'},
 	],
-	receptions: [
-		{id: 1, value: 'Dirección de correspondencia'},
-		{id: 2, value: 'Correo electrónico'},
-		{id: 3, value: 'Personalmente en la unidad'}
+	insurers: [
+		{id: 1, name: 'ALIANSALUD'},
+		{id: 2, name: 'COMPENSAR'},
+		{id: 3, name: 'FAMISANAR'},
+		{id: 4, name: 'MEDIMAS'},
+		{id: 5, name: 'NUEVA EPS'},
+	],
+	profiles: [
+		{id: 1, name: 'ADMINISTRATIVO'},
+		{id: 2, name: 'AUXILIAR DE FARMACIA'},
+		{id: 3, name: 'AUXILIAR DE LABORATORIO'},
+		{id: 4, name: 'AUXILIAR DE SALUD ORAL'},
+		{id: 5, name: 'BACTERIÓLOGO'},
+	],
+	units: [
+		{id: 1, name: 'ABRAHAM LINCOLN'},
+		{id: 2, name: 'BETANIA'},
+		{id: 3, name: 'CANDELARIA I'},
+		{id: 4, name: 'CANDELARIA II'},
+		{id: 5, name: 'CASA DE TEJA'},
+	],
+	services: [
+		{id: 1, name: 'APH'},
+		{id: 2, name: 'CARDIOLOGÍA'},
+		{id: 3, name: 'CLINICA DE HERIDAS'},
 	]
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsersService } from './services/users.service';
-import { ExportService } from './services/export.service';
+import { UserService } from './services/service.index';
 import * as $ from 'jquery';
 
 @Component({
@@ -9,8 +8,7 @@ import * as $ from 'jquery';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.css'],
 	providers: [
-		UsersService,
-		ExportService
+		UserService,
 	]
 })
 
@@ -21,8 +19,7 @@ export class AppComponent implements OnInit, DoCheck{
 	public identity: any;
 
 	constructor(
-		private _usersService: UsersService,
-		private _exportService: ExportService,
+		private _userService: UserService,
 		private _router: Router
 	){
 		this.loadUser();
@@ -59,8 +56,8 @@ export class AppComponent implements OnInit, DoCheck{
 
 			this._router.navigate(['login']);
 		} else{
-			this.token = this._usersService.getToken();
-			this.identity = this._usersService.getIdentity();
+			this.token = this._userService.getToken();
+			this.identity = this._userService.getIdentity();
 		}		
 	}
 }

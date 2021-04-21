@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Sugerencias Rendición de Cuentas</title>
+	<title>Reporte de Sucesos Seguridad del Paciente</title>
 </head>
 <body>
 	<div class="containerAll">
@@ -13,7 +13,7 @@
 					<img class="col-sm-12 col-xl-9" src="assets/images/logoSubred.png" alt="Subred Integrada de Servicios de Salud Sur Logo" title="Subred Integrada de Servicios de Salud Sur Logo">
 				</div>
 				<div class="principalTitle col col-sm-12 col-md-8 d-inline-block animated fadeInLeft delay-05s">
-					<span class="">Formulario de Preguntas Rendición de Cuentas</span>
+					<span class="">Reporte de Sucesos Seguridad del Paciente</span>
 				</div>
 			</div>
 		</div>
@@ -25,38 +25,29 @@
 			<div class="collapse navbar-collapse" id="navbarRendicion">
 				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 					<li class="nav-item">
-						<a class="nav-link" href="#" [routerLink]="['/inicio']" [routerLinkActive]="'activeNavbar'">Inicio</a>
+						<a class="nav-link" href="#" [routerLink]="['/reportes/listar']" [routerLinkActive]="'activeNavbar'">Inicio</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link dropdown-toggle" href="#" id="dropdownRendicion1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Sugerencias
+						Reportes
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownRendicion1">
-							<a class="dropdown-item" [routerLink]="['/listar-sugerencias']" [routerLinkActive]="['active']">Listar Sugerencias</a>
+							<a class="dropdown-item" [routerLink]="['/reportes/listar']" [routerLinkActive]="['active']">Listar Reportes</a>
 						</div>
-					</li>
-					<li class="nav-item" *ngIf="identity.role == 'admin'">
-						<a class="nav-link dropdown-toggle" href="#" id="dropdownRendicion2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Localidades
-						</a>
-						<div class="dropdown-menu" aria-labelledby="dropdownRendicion2">
-							<a class="dropdown-item" [routerLink]="['/listar-localidades']" [routerLinkActive]="['active']">Listar Localidades</a>
-							<a class="dropdown-item" [routerLink]="['/registrar-localidades']" [routerLinkActive]="['active']">Crear Localidad</a>
-						</div>
-					</li>		
+					</li>	
 				</ul>
 				<ul class="navbar-nav my-2 my-lg-0 menuUser">
-					<li class="nav-item dropdown" *ngIf="identity.name && identity.surname">
+					<li class="nav-item dropdown" *ngIf="identity.name">
 						<a class="nav-link dropdown-toggle" href="#" id="dropdownRendicion2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							{{ identity.name + ' ' + identity.surname }}
+							{{ identity.name }}
 						</a>
-						<div class="dropdown-menu" aria-labelledby="dropdownRendicion2" *ngIf="identity.role == 'admin'">
-							<a class="dropdown-item" [routerLink]="['/listar-usuarios']">Listar Usuarios</a>
-							<a class="dropdown-item" [routerLink]="['/registrar-usuario']">Agregar Usuarios</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownRendicion2" *ngIf="identity.role == 'ADMIN_ROLE'">
+							<a class="dropdown-item" [routerLink]="['/admin/usuarios/listar']">Listar Usuarios</a>
+							<a class="dropdown-item" [routerLink]="['/admin/usuarios/registrar']">Agregar Usuarios</a>
 							<a class="dropdown-item" [routerLink]="['/logout/1']">Cerrar Sesión</a>
 						</div>
-						<div class="dropdown-menu" aria-labelledby="dropdownRendicion2" *ngIf="identity.role != 'admin'">
-							<a class="dropdown-item" [routerLink]="['/editar-password-usuario/', identity.sub]">Cambiar Contraseña</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownRendicion2" *ngIf="identity.role != 'ADMIN_ROLE'">
+							<a class="dropdown-item" [routerLink]="['/admin/usuarios/editar', identity.sub]">Cambiar Contraseña</a>
 							<a class="dropdown-item" [routerLink]="['/logout/1']">Cerrar Sesión</a>
 						</div>
 					</li>
